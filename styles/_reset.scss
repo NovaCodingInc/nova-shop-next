@@ -1,0 +1,109 @@
+@import "mixins";
+@import "colors";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 62.5%;
+  -webkit-tap-highlight-color: transparent;
+}
+textarea {
+  resize: vertical;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: iranyekan;
+  font-weight: normal;
+  overflow-x: hidden;
+  color: $dark;
+  direction: rtl;
+  background-color: $light;
+  @include responsive(sm) {
+    font-size: 1.4rem;
+  }
+}
+
+ul {
+  list-style-type: none;
+}
+
+span,
+label,
+strong,
+p,
+a,
+button,
+input,
+textarea,
+select {
+  line-height: 1.7;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+h1 {
+  font-size: 4rem;
+  @include responsive(sm) {
+    font-size: 3rem;
+  }
+}
+h2 {
+  font-size: 3.5rem;
+  @include responsive(sm) {
+    font-size: 2.5rem;
+  }
+}
+h3 {
+  font-size: 3rem;
+  @include responsive(sm) {
+    font-size: 2.2rem;
+  }
+}
+h4 {
+  font-size: 2.5rem;
+  @include responsive(sm) {
+    font-size: 1.8rem;
+  }
+}
+h5 {
+  font-size: 2rem;
+  @include responsive(sm) {
+    font-size: 1.5rem;
+  }
+}
+h6 {
+  font-size: 1.5rem;
+  @include responsive(sm) {
+    font-size: 1.3rem;
+  }
+}
+
+a {
+  text-decoration: none !important;
+  color: $dark;
+}
+img {
+  max-width: 100%;
+}
+input,
+textarea,
+button {
+  outline: none;
+  border: none;
+  font-family: inherit;
+  background: none;
+}
+button,
+a {
+  cursor: pointer;
+}

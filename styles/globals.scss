@@ -1,14 +1,72 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-}
+@import "fonts";
+@import "reset";
 
-a {
-  color: inherit;
-  text-decoration: none;
+.text-x-small {
+  font-size: 1.2rem;
+  @include responsive(sm) {
+    font-size: 1.1rem;
+  }
 }
-
-* {
-  box-sizing: border-box;
+.text-small {
+  font-size: 1.4rem;
+  @include responsive(sm) {
+    font-size: 1.2rem;
+  }
+}
+.text-medium {
+  font-size: 1.6rem;
+  @include responsive(sm) {
+    font-size: 1.4rem;
+  }
+}
+.text-large {
+  font-size: 1.8rem;
+  @include responsive(sm) {
+    font-size: 1.6rem;
+  }
+}
+.text-x-large {
+  font-size: 2rem;
+  @include responsive(sm) {
+    font-size: 1.8rem;
+  }
+}
+.text-xx-large {
+  font-size: 2.5rem;
+  @include responsive(sm) {
+    font-size: 2.3rem;
+  }
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.dir-ltr {
+  direction: ltr;
+}
+.dir-rtl {
+  direction: rtl;
+}
+.w-4 {
+  width: 1.6rem;
+}
+.w-5 {
+  width: 2rem;
+}
+.w-6 {
+  width: 2.4rem;
+}
+.h-4 {
+  height: 1.6rem;
+}
+.h-5 {
+  height: 2rem;
+}
+.h-6 {
+  height: 2.4rem;
 }
