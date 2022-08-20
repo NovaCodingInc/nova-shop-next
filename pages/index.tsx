@@ -15,12 +15,12 @@ const Home: NextPage = () => {
         <div className={styles.boxesGrid}>
           <Link href="/">
             <a>
-              <Image src={banner1} placeholder={"blur"} />
+              <Image src={banner1} placeholder={"blur"} alt="baner" />
             </a>
           </Link>
           <Link href="/">
             <a>
-              <Image src={banner2} placeholder={"blur"} />
+              <Image src={banner2} placeholder={"blur"} alt="baner" />
             </a>
           </Link>
         </div>

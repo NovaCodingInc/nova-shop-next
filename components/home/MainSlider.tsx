@@ -24,7 +24,7 @@ function MainSlider() {
         <div className={styles.swiperSlide}>
           <Link href="/">
             <a>
-              <Image src={slide1} placeholder="blur" />
+              <Image src={slide1} placeholder="blur" alt="slide show" />
             </a>
           </Link>
         </div>
@@ -33,7 +33,7 @@ function MainSlider() {
         <div className={styles.swiperSlide}>
           <Link href="/">
             <a>
-              <Image src={slide2} placeholder="blur" />
+              <Image src={slide2} placeholder="blur" alt="slide show" />
             </a>
           </Link>
         </div>
@@ -42,7 +42,7 @@ function MainSlider() {
         <div className={styles.swiperSlide}>
           <Link href="/">
             <a>
-              <Image src={slide3} placeholder="blur" />
+              <Image src={slide3} placeholder="blur" alt="slide show" />
             </a>
           </Link>
         </div>
