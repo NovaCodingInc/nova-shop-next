@@ -1,0 +1,44 @@
+@import "../../colors";
+@import "../../mixins";
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+}
+
+.swiperSlide {
+  img {
+    height: 35rem !important;
+    min-height: 17rem !important;
+    border-radius: 1.5rem;
+
+    @include responsive(md) {
+      height: auto !important;
+    }
+  }
+  .desc {
+    flex-grow: 1;
+    margin-right: 3rem;
+    padding-top: 2rem;
+    @include responsive(lg) {
+      margin-right: 1rem;
+    }
+    h2 {
+      color: $secondary;
+      margin-bottom: 1rem;
+    }
+    a {
+      background-color: $primary;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1rem;
+      color: $white;
+      margin-top: 2rem;
+      display: inline-block;
+    }
+    p {
+      @extend .text-small;
+      text-align: justify;
+    }
+  }
+}
