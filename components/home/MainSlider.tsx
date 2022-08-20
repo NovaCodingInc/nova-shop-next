@@ -6,7 +6,6 @@ import slide1 from "../../public/images/slide-1.jpg";
 import slide2 from "../../public/images/slide-2.jpg";
 import slide3 from "../../public/images/slide-3.jpg";
 import { Autoplay } from "swiper";
-import "swiper/css/pagination";
 import Link from "next/link";
 function MainSlider() {
   return (
