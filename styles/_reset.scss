@@ -20,9 +20,9 @@ body {
   font-family: iranyekan;
   font-weight: normal;
   overflow-x: hidden;
-  color: $dark;
+  color: $gray-900;
   direction: rtl;
-  background-color: $light;
+  background-color: $gray-50;
   @include responsive(sm) {
     font-size: 1.4rem;
   }
@@ -90,7 +90,7 @@ h6 {
 
 a {
   text-decoration: none !important;
-  color: $dark;
+  color: $gray-900;
 }
 img {
   max-width: 100%;

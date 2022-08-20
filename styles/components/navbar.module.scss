@@ -1,0 +1,86 @@
+@import "../colors";
+@import "../mixins";
+
+.navbar {
+  background-color: $white;
+  box-shadow: $shadow-6;
+  font-weight: 300;
+  @include responsive(lg) {
+    display: none;
+  }
+  .mobile {
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    svg {
+      color: $primary;
+      margin-right: 7px;
+    }
+  }
+  & > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .dropdown {
+    position: relative;
+    .dropdownList {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      background-color: $white;
+      position: absolute;
+      top: 4rem;
+      width: 20rem;
+      box-shadow: $shadow-4;
+      border-radius: 1rem;
+      right: 0;
+      a {
+        margin: 1rem 0;
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      margin: 0 1rem;
+      font-weight: 300;
+      color: $gray-600;
+      &.active{
+        color: $primary;
+
+      }
+      svg {
+        margin-right: 5px;
+      }
+      @extend .text-medium;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+  .link {
+    color: $gray-600;
+    &::after {
+      content: "";
+      background-color: $primary;
+      opacity: 0.6;
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      margin: 0 1rem;
+    }
+    &:hover {
+      color: $primary;
+    }
+    &:first-child {
+      margin-right: 0;
+    }
+  }
+}

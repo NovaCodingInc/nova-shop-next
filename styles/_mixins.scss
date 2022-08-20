@@ -1,41 +1,134 @@
+@import 'colors';
+
 // RESPONSIVE MEDIA QUERY
 @mixin responsive($breakpoint) {
-    @if $breakpoint==xl {
-      @media only screen and (max-width: 75rem) {
-        @content;
-      }
-    }
-    @if $breakpoint==lg {
-      @media only screen and (max-width: 62rem) {
-        @content;
-      }
-    }
-    @if $breakpoint==md {
-      @media only screen and (max-width: 48rem) {
-        @content;
-      }
-    }
-    @if $breakpoint==sm {
-      @media only screen and (max-width: 36rem) {
-        @content;
-      }
+  @if $breakpoint==xl {
+    @media only screen and (max-width: 75rem) {
+      @content;
     }
   }
-  
-  // TRANSITION
-  @mixin transition {
-    transition: all 0.3s ease 0s;
-    -moz-transition: all 0.3s ease 0s;
-    -webkit-transition: all 0.3s ease 0s;
-    -o-transition: all 0.3s ease 0s;
+  @if $breakpoint==lg {
+    @media only screen and (max-width: 62rem) {
+      @content;
+    }
   }
-  
-  // BOX SHADOWS
-  $shadow-1: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  $shadow-2: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  $shadow-3: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  $shadow-4: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  $shadow-5: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  $shadow-6: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  $shadow-7: rgba(0, 0, 0, 0.1) 0px 10px 50px;
-  $shadow-8: rgba(0, 0, 0, 0.1) 0px 15px 20px -20px;
+  @if $breakpoint==md {
+    @media only screen and (max-width: 48rem) {
+      @content;
+    }
+  }
+  @if $breakpoint==sm {
+    @media only screen and (max-width: 36rem) {
+      @content;
+    }
+  }
+}
+
+// TRANSITION
+@mixin transition {
+  transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+}
+
+// BOX SHADOWS
+$shadow-1: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+$shadow-2: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+$shadow-3: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+$shadow-4: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+$shadow-5: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+$shadow-6: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+$shadow-7: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+$shadow-8: rgba(0, 0, 0, 0.1) 0px 15px 20px -20px;
+
+.text-x-small {
+  font-size: 1.2rem;
+  @include responsive(sm) {
+    font-size: 1.1rem;
+  }
+}
+.text-small {
+  font-size: 1.4rem;
+  @include responsive(sm) {
+    font-size: 1.2rem;
+  }
+}
+.text-medium {
+  font-size: 1.6rem;
+  @include responsive(sm) {
+    font-size: 1.4rem;
+  }
+}
+.text-large {
+  font-size: 1.8rem;
+  @include responsive(sm) {
+    font-size: 1.6rem;
+  }
+}
+.text-x-large {
+  font-size: 2rem;
+  @include responsive(sm) {
+    font-size: 1.8rem;
+  }
+}
+.text-xx-large {
+  font-size: 2.5rem;
+  @include responsive(sm) {
+    font-size: 2.3rem;
+  }
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.dir-ltr {
+  direction: ltr;
+}
+.dir-rtl {
+  direction: rtl;
+}
+.w-4 {
+  width: 1.6rem;
+}
+.w-5 {
+  width: 2rem;
+}
+.w-6 {
+  width: 2.4rem;
+}
+.w-7 {
+  width: 2.8rem;
+}
+.h-4 {
+  height: 1.6rem;
+}
+.h-5 {
+  height: 2rem;
+}
+.h-6 {
+  height: 2.4rem;
+}
+.h-7 {
+  height: 2.4rem;
+}
+.py-2 {
+  padding: 2rem;
+}
+.py-1 {
+  padding: 1rem;
+}
+.py-1-5 {
+  padding: 1.5rem;
+}
+.container {
+  max-width: 130rem;
+  margin: 0 auto;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}

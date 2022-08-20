@@ -1,0 +1,25 @@
+@import "../colors";
+@import "../mixins";
+
+.footer {
+  background-color: $secondary;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include responsive(lg) {
+    padding-bottom: 8rem;
+  }
+
+  .text {
+    color: $white;
+    a {
+      color: $white;
+      margin-right: 5px;
+    }
+    .primary {
+      color: $primary;
+    }
+  }
+}

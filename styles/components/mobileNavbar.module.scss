@@ -1,0 +1,59 @@
+@import "../colors";
+@import "../mixins";
+
+.navbar {
+  position: fixed;
+  z-index: 9;
+  bottom: 0;
+  right: 0;
+  background-color: $white;
+  box-shadow: $shadow-5;
+  width: 100%;
+  display: none;
+  padding: 0.5rem 1rem;
+  @include responsive(lg) {
+    display: block;
+  }
+  .icons {
+    display: flex;
+    justify-content: space-around;
+    @include responsive(sm) {
+      justify-content: space-between;
+    }
+    .item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: $gray-700;
+      position: relative;
+      span {
+        position: absolute;
+        top: 0px;
+        right: -7px;
+        background-color: $primary;
+        color: $white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15px;
+        height: 17px;
+        padding-top: 3px;
+    
+        @extend .text-x-small;
+      }
+      &.active {
+        color: $primary;
+        font-weight: bold;
+        svg {
+          color: $primary;
+        }
+      }
+      svg {
+        color: $gray-700;
+        margin-bottom: 1px;
+      }
+    }
+  }
+}
