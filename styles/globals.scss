@@ -2,3 +2,8 @@
 @import "reset";
 @import "mixins";
 @import "colors";
+
+.swiper-button-disabled{
+    background-color: $gray-500 !important;
+    opacity: 0.5;
+}
