@@ -67,12 +67,13 @@ const Home: NextPage = ({ productSlider1, productSlider2 }: any) => {
 };
 
 export async function getStaticProps() {
-  const res1 = await axios.get("https://dummyjson.com/products?limit=10");
-  const data1 = await res1.data;
-  const res2 = await axios.get(
+  const { data: data1 } = await axios.get(
+    "https://dummyjson.com/products?limit=10"
+  );
+
+  const { data: data2 } = await axios.get(
     "https://dummyjson.com/products?limit=10&skip=10"
   );
-  const data2 = await res2.data;
   return {
     props: {
       productSlider1: data1.products,
