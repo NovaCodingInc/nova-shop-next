@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   user-select: none;
+  @extend .text-small;
   @include responsive(lg) {
     padding-bottom: 8rem;
   }
