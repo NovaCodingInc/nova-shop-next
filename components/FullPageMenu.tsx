@@ -1,13 +1,23 @@
-import { ChevronDownIcon, ViewGridIcon, XIcon } from "@heroicons/react/outline";
+import { ViewGridIcon, XIcon } from "@heroicons/react/outline";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import styles from "../styles/components/fullpageMenu.module.scss";
-import { links } from "./Navbar";
+import { getLinks } from "./Navbar";
 function FullPageMenu({
   setShow,
 }: {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [links, setLinks] = useState<any>([]);
+  useEffect(() => {
+    let linksArr: any = [];
+    async function getLinkFunction() {
+      linksArr = await getLinks();
+      setLinks(linksArr);
+    }
+    getLinkFunction();
+  }, []);
   return (
     <>
       <motion.div
@@ -27,19 +37,28 @@ function FullPageMenu({
           </button>
         </div>
         <div className={styles.items}>
-          {links.map((link) => {
+          {links.map((link: any) => {
             return !link.dropdown ? (
               <Link href={link.link || "/"} key={link.title}>
-                <a className={styles.item}> {link.title} </a>
+                <a className={styles.item} onClick={() => setShow(false)}>
+                  {" "}
+                  {link.title}{" "}
+                </a>
               </Link>
             ) : (
               <div className={styles.dropdown} key={link.title}>
                 <span>{link.title} : </span>
                 <div className={styles.dropdownList}>
-                  {link.dropdownLinks.map((link) => {
+                  {link.dropdownLinks.map((link: any) => {
                     return (
                       <Link href={link.link} key={link.title}>
-                        <a className={styles.item}> {link.title} </a>
+                        <a
+                          className={styles.item}
+                          onClick={() => setShow(false)}
+                        >
+                          {" "}
+                          {link.title}{" "}
+                        </a>
                       </Link>
                     );
                   })}

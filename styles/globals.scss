@@ -6,4 +6,5 @@
 .swiper-button-disabled{
     background-color: $gray-500 !important;
     opacity: 0.5;
+    cursor: default !important;
 }

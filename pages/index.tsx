@@ -12,7 +12,15 @@ import {
   CubeIcon,
   LightningBoltIcon,
 } from "@heroicons/react/outline";
-const Home: NextPage = ({ productSlider1, productSlider2 }: any) => {
+import { ORDER_BY, product_type } from "../components/apiProducts";
+type propsType = {
+  productSliderNewest: product_type[];
+  productSliderLeastPrice: product_type[];
+};
+const Home: NextPage<propsType> = ({
+  productSliderNewest,
+  productSliderLeastPrice,
+}) => {
   return (
     <div className="container py-2">
       <div className={styles.gridArea}>
@@ -36,7 +44,7 @@ const Home: NextPage = ({ productSlider1, productSlider2 }: any) => {
         <div className={styles.heading}>
           <h4>
             <CubeIcon className="w-7 h-7" />
-            محصولات پر فروش
+            ارزان ترین محصولات
           </h4>
           <Link href="/">
             <a>
@@ -45,7 +53,7 @@ const Home: NextPage = ({ productSlider1, productSlider2 }: any) => {
             </a>
           </Link>
         </div>
-        <ProductSlider data={productSlider1} />
+        <ProductSlider data={productSliderLeastPrice} />
       </div>
       <div className={styles.sliderWrapper}>
         <div className={styles.heading}>
@@ -60,26 +68,34 @@ const Home: NextPage = ({ productSlider1, productSlider2 }: any) => {
             </a>
           </Link>
         </div>
-        <ProductSlider data={productSlider2} />
+        <ProductSlider data={productSliderNewest} />
       </div>
     </div>
   );
 };
+export default Home;
 
 export async function getStaticProps() {
-  const { data: data1 } = await axios.get(
-    "https://dummyjson.com/products?limit=10"
-  );
+  try {
+    const { data: newest } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}?orderBy=${ORDER_BY.NEWEST}&take=10`
+    );
 
-  const { data: data2 } = await axios.get(
-    "https://dummyjson.com/products?limit=10&skip=10"
-  );
-  return {
-    props: {
-      productSlider1: data1.products,
-      productSlider2: data2.products,
-    },
-  };
+    const { data: leastPrice } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}?orderBy=${ORDER_BY.LEAST_PRICE}&take=10`
+    );
+    return {
+      props: {
+        productSliderNewest: newest.products,
+        productSliderLeastPrice: leastPrice.products,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        productSliderNewest: [],
+        productSliderLeastPrice: [],
+      },
+    };
+  }
 }
-
-export default Home;

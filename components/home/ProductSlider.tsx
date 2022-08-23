@@ -10,7 +10,9 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/outline";
-function ProductSlider({ data }: { data: [] }) {
+import { product_type } from "../apiProducts";
+import { shimmerEffect } from "../simmerEffect";
+function ProductSlider({ data }: { data: product_type[] }) {
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
   const onBeforeInit = (Swiper: any): void => {
@@ -20,23 +22,6 @@ function ProductSlider({ data }: { data: [] }) {
       navigation.nextEl = nextRef.current;
     }
   };
-  const shimmer = (w: number, h: number) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#d4d4d4" offset="20%" />
-      <stop stop-color="#e8e8e8" offset="50%" />
-      <stop stop-color="#d4d4d4" offset="70%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#d4d4d4" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
-  const toBase64 = (str: string) =>
-    typeof window === "undefined"
-      ? Buffer.from(str).toString("base64")
-      : window.btoa(str);
   return (
     <>
       <Swiper
@@ -44,7 +29,7 @@ function ProductSlider({ data }: { data: [] }) {
         resistance={true}
         resistanceRatio={0.5}
         breakpoints={{
-          0 : {
+          0: {
             slidesPerView: 1.5,
           },
           576: {
@@ -68,7 +53,7 @@ function ProductSlider({ data }: { data: [] }) {
         modules={[Navigation, Autoplay]}
         className={styles.swiper}
       >
-        {data.map((item: any) => {
+        {data?.map((item) => {
           return (
             <SwiperSlide key={item.id}>
               <div className={styles.productSlide}>
@@ -77,16 +62,14 @@ function ProductSlider({ data }: { data: [] }) {
                 </Link>
 
                 <Image
-                  src={item.thumbnail}
+                  src={item.pictureUri}
                   width={120}
                   height={120}
                   alt="product"
                   placeholder="blur"
-                  blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                    shimmer(120, 120)
-                  )}`}
+                  blurDataURL={shimmerEffect(120, 120)}
                 />
-                <h3 className={styles.title}>{item.title}</h3>
+                <h3 className={styles.title}>{item.name}</h3>
                 <span className={styles.price}>
                   {item.price.toLocaleString()} تومان
                 </span>

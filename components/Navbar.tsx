@@ -1,15 +1,26 @@
 import { PhoneIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import axios from "axios";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/components/navbar.module.scss";
+import { category_type } from "./apiProducts";
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(0);
+  const [links, setLinks] = useState<any>([]);
+  useEffect(() => {
+    let linksArr: any = [];
+    async function getLinkFunction() {
+      linksArr = await getLinks();
+      setLinks(linksArr);
+    }
+    getLinkFunction();
+  }, []);
 
   return (
     <nav className={styles.navbar}>
       <div className="container">
         <div style={{ display: "flex" }}>
-          {links.map((link) => {
+          {links.map((link: any) => {
             return link.dropdown ? (
               <div className={styles.dropdown} key={link.title}>
                 <button
@@ -25,10 +36,10 @@ function Navbar() {
                 </button>
                 {showDropDown === link.id && (
                   <div className={styles.dropdownList}>
-                    {link.dropdownLinks.map((link) => {
+                    {link.dropdownLinks.map((link: any) => {
                       return (
                         <Link href={link.link || "/"} key={link.title}>
-                          <a> {link.title} </a>
+                          <a onClick={()=>setShowDropDown(0)}> {link.title} </a>
                         </Link>
                       );
                     })}
@@ -52,55 +63,51 @@ function Navbar() {
     </nav>
   );
 }
-
-export const links = [
-  {
-    title: "صفحه اصلی",
-    link: "/",
-  },
-  {
-    title: "محصولات",
-    link: "/products",
-  },
-  {
-    title: "درباره ما",
-    link: "/about",
-  },
-  {
-    title: "ارتباط با ما",
-    link: "/contact",
-  },
-  {
-    title: "لینک تست",
-    link: "/test",
-  },
-  {
-    title: "محصولات ویژه ",
-    link: "/test",
-  },
-  {
-    id: 1,
-    title: "دسته بندی",
-    dropdown: true,
-    dropdownLinks: [
+export const getLinks = async () => {
+  try {
+    const { data: categories } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}categories`
+    );
+    return [
       {
-        title: "دسته بندی اول",
-        link: "/1",
+        title: "صفحه اصلی",
+        link: "/",
       },
       {
-        title: "دسته بندی دوم",
-        link: "/2",
+        title: "محصولات",
+        link: "/products",
       },
       {
-        title: "دسته بندی سوم",
-        link: "/3",
+        title: "درباره ما",
+        link: "/about",
       },
       {
-        title: "دسته بندی چهارم",
-        link: "/4",
+        title: "ارتباط با ما",
+        link: "/contact",
       },
-    ],
-  },
-];
+      {
+        title: "لینک تست",
+        link: "/test",
+      },
+      {
+        title: "محصولات ویژه ",
+        link: "/test",
+      },
+      {
+        id: 1,
+        title: "دسته بندی",
+        dropdown: true,
+        dropdownLinks: categories.map((cat: category_type) => {
+          return {
+            title: cat.category,
+            link: `/products/${cat.category}`,
+          };
+        }),
+      },
+    ];
+  } catch {
+    return [];
+  }
+};
 
 export default Navbar;

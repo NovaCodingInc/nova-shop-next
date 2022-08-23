@@ -2,9 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images : {
-    domains : ['bonik-react.vercel.app' , 'dummyjson.com']
-  }
-}
+  images: {
+    domains: ["cdnnovashop.mehdimst.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
