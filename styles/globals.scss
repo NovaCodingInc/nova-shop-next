@@ -3,8 +3,16 @@
 @import "mixins";
 @import "colors";
 
-.swiper-button-disabled{
-    background-color: $gray-500 !important;
-    opacity: 0.5;
-    cursor: default !important;
+.swiper-button-disabled {
+  background-color: $gray-500 !important;
+  opacity: 0.5;
+  cursor: default !important;
+}
+
+#nprogress .bar {
+  background-color: $primary !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px $primary, 0 0 5px $primary !important;
 }
