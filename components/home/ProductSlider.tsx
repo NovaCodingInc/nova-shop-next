@@ -53,30 +53,32 @@ function ProductSlider({ data }: { data: product_type[] }) {
         modules={[Navigation, Autoplay]}
         className={styles.swiper}
       >
-        {data?.map((item) => {
-          return (
-            <SwiperSlide key={item.id}>
-              <div className={styles.productSlide}>
-                <Link href={`product/${item.id}`}>
-                  <a className={styles.link}></a>
-                </Link>
+        {data &&
+          data.length &&
+          data?.map((item) => {
+            return (
+              <SwiperSlide key={item.id}>
+                <div className={styles.productSlide}>
+                  <Link href={`/product/${item.id}`}>
+                    <a className={styles.link}></a>
+                  </Link>
 
-                <Image
-                  src={item.pictureUri}
-                  width={120}
-                  height={120}
-                  alt="product"
-                  placeholder="blur"
-                  blurDataURL={shimmerEffect(120, 120)}
-                />
-                <h3 className={styles.title}>{item.name}</h3>
-                <span className={styles.price}>
-                  {item.price.toLocaleString()} تومان
-                </span>
-              </div>
-            </SwiperSlide>
-          );
-        })}
+                  <Image
+                    src={item.pictureUri}
+                    width={120}
+                    height={120}
+                    alt="product"
+                    placeholder="blur"
+                    blurDataURL={shimmerEffect(120, 120)}
+                  />
+                  <h3 className={styles.title}>{item.name}</h3>
+                  <span className={styles.price}>
+                    {item.price.toLocaleString()} تومان
+                  </span>
+                </div>
+              </SwiperSlide>
+            );
+          })}
 
         <div ref={prevRef} className={styles.prevbtn}>
           <ChevronRightIcon className="w-6 h-6" />

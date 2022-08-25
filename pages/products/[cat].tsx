@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { product_type } from "../../components/apiProducts";
@@ -13,7 +13,7 @@ type propsType = {
   productsProp: product_type[];
   totalPages: number;
 };
-function Products({ productsProp, totalPages }: propsType) {
+const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
   const router = useRouter();
   const [products, setProducts] = useState(productsProp);
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,7 @@ function Products({ productsProp, totalPages }: propsType) {
         <div className={styles.list}>
           {loading ? (
             preLoadingArr.map((i) => (
-              <img key={i} src={shimmerEffect(450, 450)} />
+              <img key={i} src={shimmerEffect(450, 450)} alt="shimmer" />
             ))
           ) : products?.length <= 0 || !products ? (
             <div className={styles.error}>محصولی برای نمایش وجود ندارد</div>
@@ -94,6 +94,7 @@ function Products({ productsProp, totalPages }: propsType) {
                   key={product.id}
                   img={product.pictureUri}
                   title={product.name}
+                  id={product.id}
                 />
               );
             })
@@ -108,7 +109,7 @@ function Products({ productsProp, totalPages }: propsType) {
       )}
     </div>
   );
-}
+};
 
 export default Products;
 
@@ -133,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       return {
         redirect: {
           permanent: false,
-          destination: "/",
+          destination: "/404",
         },
         props: {
           productsProp: [],
@@ -145,7 +146,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
       redirect: {
         permanent: false,
-        destination: "/",
+        destination: "/404",
       },
       props: {
         productsProp: [],

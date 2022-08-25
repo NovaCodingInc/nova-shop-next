@@ -1,4 +1,4 @@
-@import 'colors';
+@import "colors";
 
 // RESPONSIVE MEDIA QUERY
 @mixin responsive($breakpoint) {
@@ -131,4 +131,8 @@ $shadow-8: rgba(0, 0, 0, 0.1) 0px 15px 20px -20px;
   margin: 0 auto;
   padding-right: 1.5rem;
   padding-left: 1.5rem;
+  @include responsive(md) {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
 }

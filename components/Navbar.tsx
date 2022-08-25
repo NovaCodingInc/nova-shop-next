@@ -48,7 +48,7 @@ function Navbar() {
               </div>
             ) : (
               <Link href={link.link || "/"} key={link.title}>
-                <a className={styles.link}> {link.title} </a>
+                <a className={styles.link} onClick={()=>setShowDropDown(0)}> {link.title} </a>
               </Link>
             );
           })}

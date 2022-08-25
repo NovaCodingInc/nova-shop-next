@@ -16,3 +16,13 @@
 #nprogress .peg {
   box-shadow: 0 0 10px $primary, 0 0 5px $primary !important;
 }
+
+.notFound-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    @extend .text-large;
+  }
+}
