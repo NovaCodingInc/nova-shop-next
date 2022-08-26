@@ -99,6 +99,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         product,
         productsSameCat: productsSameCat.products,
       },
+      revalidate : 60
     };
   } catch {
     return {

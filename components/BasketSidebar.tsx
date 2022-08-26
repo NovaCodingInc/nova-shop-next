@@ -1,7 +1,19 @@
-import { ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
+import {
+  MinusIcon,
+  PlusIcon,
+  ShoppingBagIcon,
+  TrashIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import styles from "../styles/components/basketSideBar.module.scss";
-function BasketSideBar({ setShow }: {setShow : React.Dispatch<React.SetStateAction<boolean>>}) {
+import { shimmerEffect } from "./simmerEffect";
+function BasketSideBar({
+  setShow,
+}: {
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <>
       <motion.div
@@ -9,7 +21,7 @@ function BasketSideBar({ setShow }: {setShow : React.Dispatch<React.SetStateActi
         initial={{ x: 1000 }}
         animate={{ x: 0 }}
         exit={{ x: 1000 }}
-        transition={{ bounce: 0, type: "spring" , duration : 0.4}}
+        transition={{ bounce: 0, type: "spring", duration: 0.4 }}
       >
         <div className={styles.header}>
           <strong>
@@ -18,6 +30,64 @@ function BasketSideBar({ setShow }: {setShow : React.Dispatch<React.SetStateActi
           <button onClick={() => setShow(false)}>
             <XIcon className="w-7 h-7" />
           </button>
+        </div>
+        <div className={styles.shoppings}>
+          <div className={styles.item}>
+            <div className={styles.counter}>
+              <button>
+                <PlusIcon className="w-4 h-4" />
+              </button>
+              <span>4</span>
+              <button>
+                <MinusIcon className="w-4 h-4" />
+              </button>
+            </div>
+            <div className={styles.image}>
+              <Image
+                width={85}
+                height={85}
+                src="/images/xbox-x.jpg"
+                placeholder="blur"
+                blurDataURL={shimmerEffect(85, 85)}
+                alt="product"
+              />
+            </div>
+            <div className={styles.info}>
+              <span className={styles.title}>عنوان محصول</span>
+              <span className={styles.price}>234,000 تومان</span>
+            </div>
+            <button className={styles.delete}>
+              <TrashIcon className="w-5 h-5" />
+            </button>
+          </div>
+          <div className={styles.item}>
+            <div className={styles.counter}>
+              <button>
+                <PlusIcon className="w-4 h-4" />
+              </button>
+              <span>4</span>
+              <button>
+                <MinusIcon className="w-4 h-4" />
+              </button>
+            </div>
+            <div className={styles.image}>
+              <Image
+                width={85}
+                height={85}
+                src="/images/xbox-x.jpg"
+                placeholder="blur"
+                blurDataURL={shimmerEffect(85, 85)}
+                alt="product"
+              />
+            </div>
+            <div className={styles.info}>
+              <span className={styles.title}>عنوان محصول</span>
+              <span className={styles.price}>234,000 تومان</span>
+            </div>
+            <button className={styles.delete}>
+              <TrashIcon className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </motion.div>
       <motion.div

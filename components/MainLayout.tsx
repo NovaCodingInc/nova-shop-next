@@ -1,11 +1,14 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import BasketSideBar from "./BasketSidebar";
 import Footer from "./Footer";
 import FullPageMenu from "./FullPageMenu";
 import Header from "./Header";
 import MobileNavbar from "./MobileNavbar";
 import Navbar from "./Navbar";
+import dynamic from "next/dynamic";
+const BasketSideBar = dynamic(() => import("./BasketSidebar"), {
+  loading: () => <p>بارگذاری ...</p>,
+});
 
 export default function Layout({ children }: { children: any }) {
   const [showBasketSideBar, setShowBasketSidebar] = useState(false);

@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import MainSlider from "../components/home/MainSlider";
 import styles from "../styles/components/home/home.module.scss";
@@ -75,7 +75,7 @@ const Home: NextPage<propsType> = ({
 };
 export default Home;
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     const { data: newest } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}?orderBy=${ORDER_BY.NEWEST}&take=10`
@@ -89,6 +89,7 @@ export async function getStaticProps() {
         productSliderNewest: newest.products,
         productSliderLeastPrice: leastPrice.products,
       },
+      revalidate: 60,
     };
   } catch (err) {
     return {
@@ -98,4 +99,4 @@ export async function getStaticProps() {
       },
     };
   }
-}
+};
