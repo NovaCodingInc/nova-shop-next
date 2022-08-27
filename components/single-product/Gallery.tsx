@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/components/singleProduct/gallery.module.scss";
 import { shimmerEffect } from "../simmerEffect";
 type gallryies = {
@@ -14,6 +14,10 @@ type gallryies = {
 };
 function Gallery({ galleries, main }: gallryies) {
   const [mainSrc, setMainSrc] = useState(main);
+  useEffect(() => {
+    setMainSrc(main);
+  }, [main]);
+
   if (galleries.length <= 0) {
     return (
       <div className={styles.wrapper}>
@@ -24,7 +28,7 @@ function Gallery({ galleries, main }: gallryies) {
             height={300}
             placeholder="blur"
             blurDataURL={shimmerEffect(300, 300)}
-            alt='product pic'
+            alt="product pic"
           />
         </div>
       </div>
@@ -39,7 +43,7 @@ function Gallery({ galleries, main }: gallryies) {
           height={300}
           placeholder="blur"
           blurDataURL={shimmerEffect(300, 300)}
-          alt='product pic'
+          alt="product pic"
         />
       </div>
       <div className={styles.thumbs}>
@@ -57,7 +61,7 @@ function Gallery({ galleries, main }: gallryies) {
                 placeholder="blur"
                 blurDataURL={shimmerEffect(300, 300)}
                 quality={50}
-                alt='product pic'
+                alt="product pic"
               />
             </div>
           );
