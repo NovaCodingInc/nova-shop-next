@@ -5,6 +5,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import Layout from "../components/MainLayout";
 import { useEffect } from "react";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -29,9 +30,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router]);
   return (
+    <>
+    <Head><title>نوا شاپ</title></Head>
     <Layout>
       <Component {...pageProps} />
     </Layout>
+    </>
   );
 }
 
