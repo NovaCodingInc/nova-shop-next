@@ -1,23 +1,14 @@
 import { ViewGridIcon, XIcon } from "@heroicons/react/outline";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import styles from "../styles/components/fullpageMenu.module.scss";
-import { getLinks } from "./Navbar";
 function FullPageMenu({
   setShow,
+  links
 }: {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  links : any[]
 }) {
-  const [links, setLinks] = useState<any>([]);
-  useEffect(() => {
-    let linksArr: any = [];
-    async function getLinkFunction() {
-      linksArr = await getLinks();
-      setLinks(linksArr);
-    }
-    getLinkFunction();
-  }, []);
   return (
     <>
       <motion.div

@@ -32,7 +32,7 @@ const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
   useEffect(() => {
     if (!ready) return;
     setLoading(true);
-    async function chnagePage() {
+    (async () => {
       try {
         const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}?pageId=${page}&category=${router.query.cat}&orderBy=${orderBy}`
@@ -44,14 +44,14 @@ const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
         setProducts([]);
         setLoading(false);
       }
-    }
-    chnagePage();
+    })()
+
   }, [page]);
 
   useEffect(() => {
     if (!ready) return;
     setLoading(true);
-    async function filterSort() {
+    (async () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
@@ -72,8 +72,8 @@ const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
         setProducts([]);
         setLoading(false);
       }
-    }
-    filterSort();
+    })()
+   
   }, [orderBy]);
 
   return (

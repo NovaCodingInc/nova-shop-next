@@ -1,20 +1,9 @@
 import { PhoneIcon, ChevronDownIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../styles/components/navbar.module.scss";
-import { category_type } from "./apiProducts";
-function Navbar() {
+function Navbar({links}:{links : any[]}) {
   const [showDropDown, setShowDropDown] = useState(0);
-  const [links, setLinks] = useState<any>([]);
-  useEffect(() => {
-    let linksArr: any = [];
-    async function getLinkFunction() {
-      linksArr = await getLinks();
-      setLinks(linksArr);
-    }
-    getLinkFunction();
-  }, []);
 
   return (
     <nav className={styles.navbar}>
@@ -63,51 +52,6 @@ function Navbar() {
     </nav>
   );
 }
-export const getLinks = async () => {
-  try {
-    const { data: categories } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}categories`
-    );
-    return [
-      {
-        title: "صفحه اصلی",
-        link: "/",
-      },
-      {
-        title: "محصولات",
-        link: "/products",
-      },
-      {
-        title: "درباره ما",
-        link: "/about",
-      },
-      {
-        title: "ارتباط با ما",
-        link: "/contact",
-      },
-      {
-        title: "لینک تست",
-        link: "/test",
-      },
-      {
-        title: "محصولات ویژه ",
-        link: "/test",
-      },
-      {
-        id: 1,
-        title: "دسته بندی",
-        dropdown: true,
-        dropdownLinks: categories.map((cat: category_type) => {
-          return {
-            title: cat.category,
-            link: `/products/${cat.category}`,
-          };
-        }),
-      },
-    ];
-  } catch {
-    return [];
-  }
-};
 
-export default Navbar;
+
+export default React.memo(Navbar);
