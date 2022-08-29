@@ -23,11 +23,11 @@
     &::-webkit-validation-bubble {
       display: none;
     }
-    &:invalid {
-    //   border-color: $primary;
-    //   &:focus {
-    //     border-color: $primary;
-    //   }
+    &:invalid[focused="true"] {
+      border-color: $primary;
+      &:focus {
+        border-color: $primary;
+      }
       ~ span {
         display: block !important;
       }
