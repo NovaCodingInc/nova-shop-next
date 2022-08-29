@@ -28,7 +28,10 @@ function Navbar({links}:{links : any[]}) {
                     {link.dropdownLinks.map((link: any) => {
                       return (
                         <Link href={link.link || "/"} key={link.title}>
-                          <a onClick={()=>setShowDropDown(0)}> {link.title} </a>
+                          <a onClick={() => setShowDropDown(0)}>
+                            {" "}
+                            {link.title}{" "}
+                          </a>
                         </Link>
                       );
                     })}
@@ -37,7 +40,10 @@ function Navbar({links}:{links : any[]}) {
               </div>
             ) : (
               <Link href={link.link || "/"} key={link.title}>
-                <a className={styles.link} onClick={()=>setShowDropDown(0)}> {link.title} </a>
+                <a className={styles.link} onClick={() => setShowDropDown(0)}>
+                  {" "}
+                  {link.title}{" "}
+                </a>
               </Link>
             );
           })}

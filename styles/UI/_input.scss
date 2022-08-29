@@ -1,0 +1,17 @@
+@import "../mixins";
+@import "../colors";
+.input {
+  padding: 0.8rem 1.2rem;
+  height: 4rem;
+  font-size: inherit;
+  color: $dark;
+  border-radius: 0.8rem;
+  border: 0.1rem solid $gray-300;
+  width: 100%;
+  outline: none;
+  font-family: inherit;
+  @include transition;
+  &:focus {
+    border-color: $secondary;
+  }
+}

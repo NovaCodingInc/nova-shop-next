@@ -2,6 +2,9 @@
 @import "reset";
 @import "mixins";
 @import "colors";
+@import "UI/card";
+@import "UI/input";
+@import "UI/button";
 
 .swiper-button-disabled {
   background-color: $gray-500 !important;
