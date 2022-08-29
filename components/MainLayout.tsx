@@ -1,7 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
-import FullPageMenu from "./FullPageMenu";
 import Header from "./Header";
 import MobileNavbar from "./MobileNavbar";
 import Navbar from "./Navbar";
@@ -9,6 +8,9 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import { category_type } from "./apiProducts";
 const BasketSideBar = dynamic(() => import("./BasketSidebar"), {
+  loading: () => <p>بارگذاری ...</p>,
+});
+const FullPageMenu = dynamic(() => import("./FullPageMenu"), {
   loading: () => <p>بارگذاری ...</p>,
 });
 

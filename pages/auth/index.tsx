@@ -5,10 +5,10 @@ import styles from "../../styles/components/auth/Auth.module.scss";
 
 import Card from "../../components/UI/Card";
 import Button from "../../components/UI/Button";
-import FormControl from "../../components/auth/formControl";
+import FormControl from "../../components/auth/FormControl";
 
 function Auth() {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<any>({
     email: "",
     password: "",
   });
