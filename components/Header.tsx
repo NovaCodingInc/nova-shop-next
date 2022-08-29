@@ -29,9 +29,11 @@ function Header({
               <span>3</span>
               <ShoppingBagIcon className="w-5 h-5" />
             </button>
-            <button>
-              <UserIcon className="w-5 h-5" />
-            </button>
+            <Link href="/auth">
+              <button>
+                <UserIcon className="w-5 h-5" />
+              </button>
+            </Link>
           </div>
           <div className={styles.searchBar}>
             <form onSubmit={searchHandler}>

@@ -1,0 +1,7 @@
+@import "../mixins";
+@import "../colors";
+.card {
+  box-shadow: $shadow-1;
+  border-radius: 0.8rem;
+  background-color: $white;
+}

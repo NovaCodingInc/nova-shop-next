@@ -21,7 +21,7 @@ function Pagination({
   }
 
   return (
-    <div className={styles.pagination} >
+    <div className={styles.pagination}>
       <button onClick={() => setPage(total)} disabled={page >= total}>
         صفحه آخر
       </button>
@@ -31,7 +31,7 @@ function Pagination({
       <button onClick={prevHandler} disabled={page <= 1}>
         <ChevronLeftIcon className="w-7 h-7" />
       </button>
-      <button onClick={() => setPage(1)}  disabled={page <= 1}>
+      <button onClick={() => setPage(1)} disabled={page <= 1}>
         صفحه نخست
       </button>
     </div>

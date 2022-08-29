@@ -1,0 +1,22 @@
+@import "../mixins";
+@import "../colors";
+
+.button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  background: $primary;
+  line-height: 1;
+  border: none;
+  color: $white;
+  height: 4rem;
+  margin-bottom: 2.5rem;
+  border-radius: 0.8rem;
+  @extend .text-small;
+  @include transition;
+}

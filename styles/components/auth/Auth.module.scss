@@ -1,0 +1,45 @@
+@import "../../colors";
+@import "../../mixins";
+.formCard {
+  width: 50rem;
+  margin: 2rem auto;
+  .content {
+    padding: 4.8rem 6rem;
+    h3 {
+      @extend .text-x-large;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .formBtn {
+      background-color: $secondary;
+      margin-bottom: 0;
+      margin-top: 2rem;
+      &:hover {
+        background-color: transparent;
+        border: 0.1rem solid $secondary;
+        color: $secondary;
+      }
+    }
+    .signup {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 2rem;
+      span {
+        @extend .text-medium;
+        color: $gray-500;
+      }
+      h6 {
+        border-bottom: 1px solid $secondary;
+        border-top-color: $secondary;
+        border-right-color: $secondary;
+        border-left-color: $secondary;
+        font-weight: 600;
+        @extend .text-medium;
+        margin-bottom: 0px;
+        margin-top: 0px;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
