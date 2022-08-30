@@ -13,6 +13,11 @@ function Auth() {
     password: "",
     confirmPassword: "",
   });
+  const [errors, setErrors] = useState<any>({
+    email: false,
+    password: false,
+    confirmPassword : false
+  });
   const inputs = [
     {
       id: 1,
@@ -21,8 +26,9 @@ function Auth() {
       placeholder: "Example@gmail.com",
       errorMessage: "آدرس ایمیل معتبر نمی باشد!",
       label: "ایمیل",
-      pattern: `^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$`,
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       required: true,
+      autoComplete : 'off'
     },
     {
       id: 2,
@@ -30,10 +36,12 @@ function Auth() {
       type: "password",
       placeholder: "رمز عبور خود را وارد کنید",
       errorMessage:
-        "رمز عبور باید حداقل شامل یک حرف، یک عدد و بیشتر از 8 کاراکتر باشد!",
+        "رمز عبور باید حداقل شامل  یک عدد  و یک حرف و بیشتر از 8 کاراکتر باشد!",
       label: "رمز عبور",
-      pattern: `^(?=.*\d).{8,}$`,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       required: true,
+      autoComplete : 'off'
+
     },
     {
       id: 3,
@@ -45,11 +53,37 @@ function Auth() {
       label: "تکرار رمز عبور",
       pattern: values.password,
       required: true,
+      autoComplete : 'off'
+
     },
   ];
   function handleSubmit(event: any) {
     event.preventDefault();
+    const isOk = inputs.every((input) => {
+      const regex = new RegExp(input.pattern);
+      const value = values[input.name];
+      return regex.test(value);
+    });
+    if (isOk && values.password === values.confirmPassword) alert("log in");
+    else return;
   }
+  const handleError = (e: any) => {
+    if(e.target.name === "confirmPassword"){
+      if(e.target.value === values.password) setErrors((prev: any) => ({ ...prev, [e.target.name]: false }));
+      else setErrors((prev: any) => ({ ...prev, [e.target.name]: true }));
+    }else{
+      const regex = new RegExp(
+        inputs.filter((input: any) => input.name === e.target.name)[0].pattern
+      );
+      if (regex.test(e.target.value)) {
+        setErrors((prev: any) => ({ ...prev, [e.target.name]: false }));
+      } else {
+        setErrors((prev: any) => ({ ...prev, [e.target.name]: true }));
+      }
+    }
+   
+  };
+
 
   function onChange(event: any) {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -61,10 +95,12 @@ function Auth() {
           <h3>ساخت حساب</h3>
           {inputs.map((input) => (
             <FormControl
-              key={input.id}
-              {...input}
-              value={values[input.name]}
-              onChange={onChange}
+            key={input.id}
+            {...input}
+            value={values[input.name]}
+            onChange={onChange}
+            onKeyUp={handleError}
+            hasError={errors[input.name]}
             />
           ))}
           <Button type="submit" className={styles.formBtn}>

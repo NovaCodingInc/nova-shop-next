@@ -12,6 +12,10 @@ function Auth() {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState<any>({
+    email: false,
+    password: false,
+  });
   const inputs = [
     {
       id: 1,
@@ -20,8 +24,9 @@ function Auth() {
       placeholder: "Example@gmail.com",
       errorMessage: "آدرس ایمیل معتبر نمی باشد!",
       label: "ایمیل",
-      pattern: `^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$`,
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       required: true,
+      autoComplete : "off"
     },
     {
       id: 2,
@@ -29,15 +34,33 @@ function Auth() {
       type: "password",
       placeholder: "رمز عبور خود را وارد کنید",
       errorMessage:
-        "رمز عبور باید حداقل شامل یک حرف، یک عدد و بیشتر از 8 کاراکتر باشد!",
-      label: "رمز عبور",
-      pattern: `^(?=.*\d).{8,}$`,
+      "رمز عبور باید حداقل شامل  یک عدد  و یک حرف و بیشتر از 8 کاراکتر باشد!",
+    label: "رمز عبور",
+    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       required: true,
+      autoComplete : "off"
     },
   ];
   function handleSubmit(event: any) {
     event.preventDefault();
+    const isOk = inputs.every((input) => {
+      const regex = new RegExp(input.pattern);
+      const value = values[input.name];
+      return regex.test(value);
+    });
+    if (isOk) alert("log in");
+    else return;
   }
+  const handleError = (e: any) => {
+    const regex = new RegExp(
+      inputs.filter((input: any) => input.name === e.target.name)[0].pattern
+    );
+    if (regex.test(e.target.value)) {
+      setErrors((prev: any) => ({ ...prev, [e.target.name]: false }));
+    } else {
+      setErrors((prev: any) => ({ ...prev, [e.target.name]: true }));
+    }
+  };
 
   function onChange(event: any) {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -53,6 +76,8 @@ function Auth() {
               {...input}
               value={values[input.name]}
               onChange={onChange}
+              onKeyUp={handleError}
+              hasError={errors[input.name]}
             />
           ))}
           <Button type="submit" className={styles.formBtn}>
