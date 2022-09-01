@@ -7,6 +7,8 @@ import {
 } from "@heroicons/react/outline";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useContext } from "react";
+import { basketContext } from "../context/Basket";
 import styles from "../styles/components/basketSideBar.module.scss";
 import { shimmerEffect } from "./simmerEffect";
 function BasketSideBar({
@@ -14,6 +16,8 @@ function BasketSideBar({
 }: {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const {basketData , dispatch} = useContext(basketContext);
+
   return (
     <>
       <motion.div
@@ -32,63 +36,44 @@ function BasketSideBar({
           </button>
         </div>
         <div className={styles.shoppings}>
-          <div className={styles.item}>
-            <div className={styles.counter}>
-              <button>
-                <PlusIcon className="w-4 h-4" />
-              </button>
-              <span>4</span>
-              <button>
-                <MinusIcon className="w-4 h-4" />
-              </button>
-            </div>
-            <div className={styles.image}>
-              <Image
-                width={85}
-                height={85}
-                src="/images/xbox-x.jpg"
-                placeholder="blur"
-                blurDataURL={shimmerEffect(85, 85)}
-                alt="product"
-              />
-            </div>
-            <div className={styles.info}>
-              <span className={styles.title}>عنوان محصول</span>
-              <span className={styles.price}>234,000 تومان</span>
-            </div>
-            <button className={styles.delete}>
-              <TrashIcon className="w-5 h-5" />
-            </button>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.counter}>
-              <button>
-                <PlusIcon className="w-4 h-4" />
-              </button>
-              <span>4</span>
-              <button>
-                <MinusIcon className="w-4 h-4" />
+          {(!basketData || !basketData.length) && <span>سبد خرید خالی است</span> }
+          {basketData.map((item : any) => {
+            return(
+              <div className={styles.item} key={Math.random()}>
+              <div className={styles.counter}>
+                <button>
+                  <PlusIcon className="w-4 h-4" />
+                </button>
+                <span>{item.count}</span>
+                <button>
+                  <MinusIcon className="w-4 h-4" />
+                </button>
+              </div>
+              <div className={styles.image}>
+                <Image
+                  width={85}
+                  height={85}
+                  src={item.image}
+                  placeholder="blur"
+                  blurDataURL={shimmerEffect(85, 85)}
+                  alt="product"
+                />
+              </div>
+              <div className={styles.info}>
+                <span className={styles.title}>{item.title}</span>
+                <span className={styles.price}>{item.price.toLocaleString()} تومان</span>
+              </div>
+              <button className={styles.delete}>
+                <TrashIcon className="w-5 h-5" />
               </button>
             </div>
-            <div className={styles.image}>
-              <Image
-                width={85}
-                height={85}
-                src="/images/xbox-x.jpg"
-                placeholder="blur"
-                blurDataURL={shimmerEffect(85, 85)}
-                alt="product"
-              />
-            </div>
-            <div className={styles.info}>
-              <span className={styles.title}>عنوان محصول</span>
-              <span className={styles.price}>234,000 تومان</span>
-            </div>
-            <button className={styles.delete}>
-              <TrashIcon className="w-5 h-5" />
-            </button>
-          </div>
+            )
+          })}
         </div>
+        <div className={styles.footer}>
+          <button>ثبت سفارش (23,000 تومان)</button>
+        </div>
+
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}

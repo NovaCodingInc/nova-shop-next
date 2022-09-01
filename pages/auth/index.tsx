@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 
 import styles from "../../styles/components/auth/Auth.module.scss";
@@ -6,6 +6,9 @@ import styles from "../../styles/components/auth/Auth.module.scss";
 import Card from "../../components/UI/Card";
 import Button from "../../components/UI/Button";
 import FormControl from "../../components/auth/FormControl";
+import { userContext } from "../../context/User";
+import axios from "axios";
+import { basketContext } from "../../context/Basket";
 
 function Auth() {
   const [values, setValues] = useState<any>({
@@ -26,7 +29,7 @@ function Auth() {
       label: "ایمیل",
       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       required: true,
-      autoComplete : "off"
+      autoComplete: "off",
     },
     {
       id: 2,
@@ -34,13 +37,15 @@ function Auth() {
       type: "password",
       placeholder: "رمز عبور خود را وارد کنید",
       errorMessage:
-      "رمز عبور باید حداقل شامل  یک عدد  و یک حرف و بیشتر از 8 کاراکتر باشد!",
-    label: "رمز عبور",
-    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        "رمز عبور باید حداقل شامل  یک عدد  و یک حرف و بیشتر از 8 کاراکتر باشد!",
+      label: "رمز عبور",
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       required: true,
-      autoComplete : "off"
+      autoComplete: "off",
     },
   ];
+  const { setUserData } = useContext(userContext);
+  const { dispatch } = useContext(basketContext);
   function handleSubmit(event: any) {
     event.preventDefault();
     const isOk = inputs.every((input) => {
@@ -48,8 +53,15 @@ function Auth() {
       const value = values[input.name];
       return regex.test(value);
     });
-    if (isOk) alert("log in");
-    else return;
+    if (isOk) {
+      setUserData({ email: "", isLoggedIn: true });
+      (async () => {
+        const { data: payload } = await axios.get(
+          `http://localhost:3001/basket`
+        );
+        dispatch({ type: "ADD_ALL", payload });
+      })();
+    } else return;
   }
   const handleError = (e: any) => {
     const regex = new RegExp(

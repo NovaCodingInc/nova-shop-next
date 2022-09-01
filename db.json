@@ -1,0 +1,39 @@
+{
+  "basket": [
+    {
+      "id": 10000,
+      "title": "موبایل سامسونگ",
+      "count": 1,
+      "price": 3000,
+      "image": "https://cdnnovashop.mehdimst.com/catalog/3"
+    },
+    {
+      "count": 1,
+      "id": 17,
+      "title": "IPhone X",
+      "price": 31000,
+      "image": "https://cdnnovashop.mehdimst.com/catalog/17"
+    },
+    {
+      "count": 1,
+      "id": 19,
+      "title": "Laptop FX510 ASUS",
+      "price": 43200,
+      "image": "https://cdnnovashop.mehdimst.com/catalog/19"
+    },
+    {
+      "count": 1,
+      "id": 6,
+      "title": "Samsung S20 Plus",
+      "price": 26500,
+      "image": "https://cdnnovashop.mehdimst.com/catalog/6"
+    },
+    {
+      "count": 1,
+      "id": 14,
+      "title": "Samsung S20 Plus",
+      "price": 26500,
+      "image": "https://cdnnovashop.mehdimst.com/catalog/14"
+    }
+  ]
+}

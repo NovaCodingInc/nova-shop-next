@@ -51,7 +51,7 @@ function Header({
             <Link href="/">
               <a>
                 <Image
-                  src={"/images/logo.svg"}
+                  src={"/images/logo-nova-shop.png"}
                   width={100}
                   height={50}
                   alt="logo"

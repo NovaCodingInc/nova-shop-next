@@ -52,7 +52,7 @@ const Product: NextPage<propsType> = ({ product, productsSameCat }) => {
             </span>
           </div>
           <div className={styles.order}>
-            <Order />
+            <Order payload={{count : 1,id:product.id , title : product.name , price : product.price, image : product.pictureUri}} />
           </div>
         </div>
       </div>
