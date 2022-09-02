@@ -5,7 +5,7 @@ import Header from "./Header";
 import MobileNavbar from "./MobileNavbar";
 import Navbar from "./Navbar";
 import dynamic from "next/dynamic";
-import axios from "axios";
+import axios from "../context/customAxios";
 import { category_type } from "./apiProducts";
 const BasketSideBar = dynamic(() => import("./BasketSidebar"), {
   loading: () => <p>بارگذاری ...</p>,
@@ -17,7 +17,7 @@ const FullPageMenu = dynamic(() => import("./FullPageMenu"), {
 const getLinks = async () => {
   try {
     const { data: categories } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}categories`
+      `catalog/categories`
     );
     return [
       {

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "../../styles/components/auth/Formcontrol.module.scss";
 import Input from "../UI/Input";
 

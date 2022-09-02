@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../context/customAxios";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
     async function chnagePage() {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}?pageId=${page}&orderBy=${orderBy}&search=${router.query.search}`
+          `catalog/?pageId=${page}&orderBy=${orderBy}&search=${router.query.search}`
         );
         setProducts(data.products);
         window.scrollTo(0, 0);
@@ -55,7 +55,7 @@ const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}?pageId=1&search=${router.query.search}&orderBy=${orderBy}`
+          `catalog/?pageId=1&search=${router.query.search}&orderBy=${orderBy}`
         );
         setProducts(data.products);
         setPage(1);
@@ -120,7 +120,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const orderQ = !!query?.orderBy ? `&orderBy=${query.orderBy}` : "";
   try {
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}?pageId=1${orderQ}&search=${query.search}`
+      `catalog/?pageId=1${orderQ}&search=${query.search}`
     );
     if (data.products.length > 0) {
       return {

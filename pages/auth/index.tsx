@@ -59,7 +59,9 @@ function Auth() {
         const { data: payload } = await axios.get(
           `http://localhost:3001/basket`
         );
-        dispatch({ type: "ADD_ALL", payload });
+        Array.isArray(payload)
+          ? dispatch({ type: "ADD_ALL", payload })
+          : dispatch({ type: "ADD_ALL", payload: [] });
       })();
     } else return;
   }

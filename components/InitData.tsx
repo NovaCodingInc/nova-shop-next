@@ -7,7 +7,6 @@ function InitData() {
   const { dispatch } = useContext(basketContext);
   const { userData } = useContext(userContext);
   useEffect(() => {
-    console.log(userData.isLoggedIn);
     
     if (!userData.isLoggedIn) {
       const payload = JSON.parse(localStorage.getItem("basket") || "[]");

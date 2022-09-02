@@ -39,7 +39,7 @@ function BasketSideBar({
           {(!basketData || !basketData.length) && <span>سبد خرید خالی است</span> }
           {basketData.map((item : any) => {
             return(
-              <div className={styles.item} key={Math.random()}>
+              <div className={styles.item} key={item.id}>
               <div className={styles.counter}>
                 <button>
                   <PlusIcon className="w-4 h-4" />

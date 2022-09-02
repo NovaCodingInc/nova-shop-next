@@ -6,7 +6,7 @@ import banner1 from "../public/images/ps5.jpg";
 import banner2 from "../public/images/xbox-x.jpg";
 import Link from "next/link";
 import ProductSlider from "../components/home/ProductSlider";
-import axios from "axios";
+import axios from "../context/customAxios";
 import {
   ChevronDoubleLeftIcon,
   CubeIcon,
@@ -78,11 +78,11 @@ export default Home;
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const { data: newest } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}?orderBy=${ORDER_BY.NEWEST}&take=10`
+      `catalog/?orderBy=${ORDER_BY.NEWEST}&take=10`
     );
 
     const { data: leastPrice } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}?orderBy=${ORDER_BY.LEAST_PRICE}&take=10`
+      `catalog/?orderBy=${ORDER_BY.LEAST_PRICE}&take=10`
     );
     return {
       props: {

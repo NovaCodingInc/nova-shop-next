@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../context/customAxios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { product_type } from "../../components/apiProducts";
@@ -81,10 +81,10 @@ export default Product;
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const { data: product } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}${params?.id}`
+      `catalog/${params?.id}`
     );
     const { data: productsSameCat } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}?take=10&category=${product.category}`
+      `catalog/?take=10&category=${product.category}`
     );
 
     if (product.status?.toString() === "404")
