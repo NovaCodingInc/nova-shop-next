@@ -62,9 +62,9 @@ function Auth() {
       type: "password",
       placeholder: "رمز عبور خود را وارد کنید",
       errorMessage:
-        "رمز عبور باید حداقل شامل  یک عدد  و یک حرف و بیشتر از 8 کاراکتر باشد!",
+        "رمز عبور باید حدقل شامل یک عدد ، حروف کوچک و بزرگ و یک کاراکتر ویژه مانند @!# باشد و بیشتر از 8 حرف",
       label: "رمز عبور",
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
       required: true,
       autoComplete: "off",
     },
@@ -75,7 +75,7 @@ function Auth() {
       placeholder: "تکرار رمز عبور خود را وارد کنید",
       errorMessage: "رمز عبور تطابق ندارد!",
       label: "تکرار رمز عبور",
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
       required: true,
       autoComplete: "off",
     },
@@ -122,7 +122,11 @@ function Auth() {
                   return (
                     <ul>
                       {data.response.data.errors.map((item: any) => {
-                        return <li key={item.code} style={{margin:'5px'}}>{item.description}</li>;
+                        return (
+                          <li key={item.code} style={{ margin: "5px" }}>
+                            {item.description}
+                          </li>
+                        );
                       })}
                     </ul>
                   );

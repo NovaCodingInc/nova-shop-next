@@ -1,13 +1,28 @@
 import React, { useState } from "react";
-export const userContext = React.createContext<any>({});
+type userDataType = {
+  isLoggedIn: boolean;
+  email: string;
+};
+type userContextType = {
+  userData: userDataType;
+  setUserData: React.Dispatch<React.SetStateAction<userDataType>>;
+};
+export const userContext = React.createContext<userContextType>({
+  userData: {isLoggedIn : false , email : ""},
+  setUserData: "" as any,
+});
 
 function UserContextWrapper({ children }: any) {
   const initialState = {
     isLoggedIn: false,
     email: "",
   };
-  const [userData, setUserData] = useState(initialState);
+  const [userData, setUserData] = useState<userDataType>(initialState);
 
-  return <userContext.Provider value={{userData , setUserData}}>{children}</userContext.Provider>
+  return (
+    <userContext.Provider value={{ userData, setUserData }}>
+      {children}
+    </userContext.Provider>
+  );
 }
 export default UserContextWrapper;
