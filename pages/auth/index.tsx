@@ -70,7 +70,9 @@ function Auth() {
     },
   ];
   const dispatch = useAppDispatch();
-  const { isLoggedIn , loading : loadingUserInfo } = useAppSelector((state) => state.user);
+  const { isLoggedIn, loading: loadingUserInfo } = useAppSelector(
+    (state) => state.user
+  );
   useEffect(() => {
     isLoggedIn && router.push("/user");
   }, [isLoggedIn]);
@@ -99,8 +101,6 @@ function Auth() {
               render({ data }) {
                 setloading(false);
                 if (data?.data.succeeded) {
-                  dispatch(setUserInfo(data.data.email));
-                  Cookies.set("token", data.data.token, { expires: 30 });
                   return <p>ورود انجام شد</p>;
                 }
                 return "";
@@ -116,6 +116,8 @@ function Auth() {
           }
         );
         if (response?.data.succeeded) {
+          dispatch(setUserInfo(response.data.email));
+          Cookies.set("token", response.data.token, { expires: 30 });
           router.push("/user");
         }
       })();
@@ -135,9 +137,9 @@ function Auth() {
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     setValues({ ...values, [event.target.name]: event.target.value });
   }
-  if(loadingUserInfo){
-return <FullLoading />
-  }else{
+  if (loadingUserInfo) {
+    return <FullLoading />;
+  } else {
     return (
       <div className="container py-2">
         <ToastContainer
@@ -180,6 +182,5 @@ return <FullLoading />
       </div>
     );
   }
-
 }
 export default Auth;
