@@ -1,9 +1,6 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import { basketContext } from "../../context/Basket";
-import { userContext } from "../../context/User";
+import { useEffect, useState } from "react";
 import styles from "../../styles/components/singleProduct/singleProductPage.module.scss";
 
 function Order({ payload }: any) {
@@ -13,40 +10,9 @@ function Order({ payload }: any) {
   useEffect(() => {
     setCount(1);
   }, [query.id]);
-  const { dispatch, basketData } = useContext(basketContext);
-  const { userData, setUserData } = useContext(userContext);
-  const addToBasket = () => {
-    if (!userData.isLoggedIn) {
-      if (basketData.filter((item: any) => item.id === payload.id).length < 1) {
-        dispatch({ type: "ADD", payload: { ...payload, count } });
-        const newArr = [...basketData, { ...payload, count }];
-        localStorage.setItem("basket", JSON.stringify(newArr));
-      } else {
-        dispatch({ type: "UPDATE", payload: { id: payload.id, count } });
-        const newArr = basketData.map((item: any) => {
-          if (item.id === payload.id) {
-            return { ...item, count };
-          } else {
-            return item;
-          }
-        });
-        localStorage.setItem("basket", JSON.stringify(newArr));
-      }
-    } else {
-      if (basketData.filter((item: any) => item.id === payload.id).length < 1) {
-        dispatch({ type: "ADD", payload: { ...payload, count } });
 
-        (async () => {
-          const x = axios.post(`http://localhost:3001/basket`, {
-            ...payload,
-            count,
-          });
-          console.log(x);
-        })();
-      } else {
-        // soon
-      }
-    }
+  const addToBasket = () => {
+    return false;
   };
   return (
     <>

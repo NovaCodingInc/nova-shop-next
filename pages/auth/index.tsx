@@ -1,18 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
 import styles from "../../styles/components/auth/Auth.module.scss";
-
 import Card from "../../components/UI/Card";
 import Button from "../../components/UI/Button";
 import FormControl from "../../components/auth/FormControl";
-import { userContext } from "../../context/User";
 import axios from "../../context/customAxios";
-import { basketContext } from "../../context/Basket";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setUserInfo } from "../../app/features/userSlice";
+import FullLoading from "../../components/FullLoading";
 
 type values_type = {
   email: string;
@@ -70,14 +69,11 @@ function Auth() {
       autoComplete: "off",
     },
   ];
-  const { setUserData, userData } = useContext(userContext);
-  const [ready, setReady] = useState(false);
+  const dispatch = useAppDispatch();
+  const { isLoggedIn , loading : loadingUserInfo } = useAppSelector((state) => state.user);
   useEffect(() => {
-    setReady(true);
-    if (!ready) return;
-    if (userData.isLoggedIn) router.push("/user");
-  }, [userData.isLoggedIn, ready]);
-  const { dispatch } = useContext(basketContext);
+    isLoggedIn && router.push("/user");
+  }, [isLoggedIn]);
   function handleSubmit(event: any) {
     event.preventDefault();
     const isOk = inputs.every((input) => {
@@ -103,9 +99,8 @@ function Auth() {
               render({ data }) {
                 setloading(false);
                 if (data?.data.succeeded) {
-                  setUserData({ email: data.data.email, isLoggedIn: true });
+                  dispatch(setUserInfo(data.data.email));
                   Cookies.set("token", data.data.token, { expires: 30 });
-                  Cookies.set("email", data.data.email, { expires: 30 });
                   return <p>ورود انجام شد</p>;
                 }
                 return "";
@@ -114,7 +109,8 @@ function Auth() {
             error: {
               render({ data }) {
                 setloading(false);
-                if (!data.response.data.succeeded) return <p>یوزر یافت نشد</p>;
+                if (!data.response.data.succeeded)
+                  return <p>ایمیل یا رمز عبور اشتباه است</p>;
               },
             },
           }
@@ -123,14 +119,6 @@ function Auth() {
           router.push("/user");
         }
       })();
-      // (async () => {
-      //   const { data: payload } = await axios.get(
-      //     `http://localhost:3001/basket`
-      //   );
-      //   Array.isArray(payload)
-      //     ? dispatch({ type: "ADD_ALL", payload })
-      //     : dispatch({ type: "ADD_ALL", payload: [] });
-      // })();
     } else return;
   }
   const handleError = (e: any) => {
@@ -147,46 +135,51 @@ function Auth() {
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     setValues({ ...values, [event.target.name]: event.target.value });
   }
-  return (
-    <div className="container py-2">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={true}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Card className={styles.formCard}>
-        <form onSubmit={handleSubmit} className={styles.content}>
-          <h3>ورود</h3>
-          {inputs.map((input) => (
-            <FormControl
-              key={input.id}
-              {...input}
-              value={values[input.name as ObjectKey]}
-              onChange={onChange}
-              onKeyUp={handleError}
-              hasError={errors[input.name as ObjectKey]}
-            />
-          ))}
-          <Button type="submit" className={styles.formBtn} disabled={loading}>
-            ورود
-          </Button>
-          <div className={styles.signup}>
-            <span>حساب ندارید؟</span>
-            <Link href="/auth/signup">
-              <a>
-                <h6>ثبت نام</h6>
-              </a>
-            </Link>
-          </div>
-        </form>
-      </Card>
-    </div>
-  );
+  if(loadingUserInfo){
+return <FullLoading />
+  }else{
+    return (
+      <div className="container py-2">
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={true}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Card className={styles.formCard}>
+          <form onSubmit={handleSubmit} className={styles.content}>
+            <h3>ورود</h3>
+            {inputs.map((input) => (
+              <FormControl
+                key={input.id}
+                {...input}
+                value={values[input.name as ObjectKey]}
+                onChange={onChange}
+                onKeyUp={handleError}
+                hasError={errors[input.name as ObjectKey]}
+              />
+            ))}
+            <Button type="submit" className={styles.formBtn} disabled={loading}>
+              ورود
+            </Button>
+            <div className={styles.signup}>
+              <span>حساب ندارید؟</span>
+              <Link href="/auth/signup">
+                <a>
+                  <h6>ثبت نام</h6>
+                </a>
+              </Link>
+            </div>
+          </form>
+        </Card>
+      </div>
+    );
+  }
+
 }
 export default Auth;

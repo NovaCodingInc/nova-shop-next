@@ -7,8 +7,6 @@ import {
 } from "@heroicons/react/outline";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useContext } from "react";
-import { basketContext } from "../context/Basket";
 import styles from "../styles/components/basketSideBar.module.scss";
 import { shimmerEffect } from "./simmerEffect";
 function BasketSideBar({
@@ -16,8 +14,6 @@ function BasketSideBar({
 }: {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const {basketData , dispatch} = useContext(basketContext);
-
   return (
     <>
       <motion.div
@@ -35,7 +31,7 @@ function BasketSideBar({
             <XIcon className="w-7 h-7" />
           </button>
         </div>
-        <div className={styles.shoppings}>
+        {/* <div className={styles.shoppings}>
           {(!basketData || !basketData.length) && <span>سبد خرید خالی است</span> }
           {basketData.map((item : any) => {
             return(
@@ -69,7 +65,7 @@ function BasketSideBar({
             </div>
             )
           })}
-        </div>
+        </div> */}
         <div className={styles.footer}>
           <button>ثبت سفارش (23,000 تومان)</button>
         </div>

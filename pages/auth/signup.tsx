@@ -7,6 +7,7 @@ import FormControl from "../../components/auth/FormControl";
 import axios from "../../context/customAxios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 type values_type = {
   email: string;
@@ -80,7 +81,7 @@ function Auth() {
       autoComplete: "off",
     },
   ];
-
+  const router = useRouter();
   const [loading, setloading] = useState(false);
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -137,6 +138,11 @@ function Auth() {
             },
           }
         );
+        if (response?.data.succeeded) {
+          setTimeout(() => {
+            router.push("/auth/");
+          }, 1000);
+        }
       })();
     } else return;
   }

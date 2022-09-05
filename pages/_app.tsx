@@ -6,13 +6,11 @@ import "nprogress/nprogress.css";
 import Layout from "../components/MainLayout";
 import { useEffect } from "react";
 import Head from "next/head";
-import BasketContextWrapper from "../context/Basket";
-import InitData from "../components/InitData";
-import UserContextWrapper from "../context/User";
+import { store } from "../app/store/store";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
   NProgress.configure({ showSpinner: false });
   useEffect(() => {
     const handleStart = (url: string) => {
@@ -38,14 +36,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>نوا شاپ</title>
       </Head>
-      <BasketContextWrapper>
-        <UserContextWrapper>
-          <InitData />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </UserContextWrapper>
-      </BasketContextWrapper>
+
+      <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
     </>
   );
 }

@@ -7,6 +7,10 @@ import Navbar from "./Navbar";
 import dynamic from "next/dynamic";
 import axios from "../context/customAxios";
 import { category_type } from "./apiProducts";
+import { authorize } from "./authorize";
+import Cookies from "js-cookie";
+import { useAppDispatch } from "../app/hooks";
+import { resetUserInfo, setUserInfo } from "../app/features/userSlice";
 const BasketSideBar = dynamic(() => import("./BasketSidebar"), {
   loading: () => <p>بارگذاری ...</p>,
 });
@@ -16,9 +20,7 @@ const FullPageMenu = dynamic(() => import("./FullPageMenu"), {
 
 const getLinks = async () => {
   try {
-    const { data: categories } = await axios.get(
-      `catalog/categories`
-    );
+    const { data: categories } = await axios.get(`catalog/categories`);
     return [
       {
         title: "صفحه اصلی",
@@ -64,14 +66,22 @@ const getLinks = async () => {
 export default function Layout({ children }: { children: any }) {
   const [showBasketSideBar, setShowBasketSidebar] = useState(false);
   const [showFullMenu, setShowFullMenu] = useState(false);
-  const [links , setLinks] = useState<any>([])
+  const [links, setLinks] = useState<any>([]);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     let linksArr: any = [];
-   ( async () => {
+    (async () => {
       linksArr = await getLinks();
       setLinks(linksArr);
-    })()
- 
+      authorize().then((result) => {
+        if (result !== false) {
+          dispatch(setUserInfo(result.email));
+        } else {
+          Cookies.remove("token");
+          dispatch(resetUserInfo());
+        }
+      });
+    })();
   }, []);
   useEffect(() => {
     if (showBasketSideBar || showFullMenu)
@@ -88,7 +98,9 @@ export default function Layout({ children }: { children: any }) {
       />
       <AnimatePresence>
         {showBasketSideBar && <BasketSideBar setShow={setShowBasketSidebar} />}
-        {showFullMenu && <FullPageMenu setShow={setShowFullMenu} links={links} />}
+        {showFullMenu && (
+          <FullPageMenu setShow={setShowFullMenu} links={links} />
+        )}
       </AnimatePresence>
       <main>{children}</main>
       <Footer />
