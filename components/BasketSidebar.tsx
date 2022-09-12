@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/outline";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import styles from "../styles/components/basketSideBar.module.scss";
+import styles from "../styles/components/basketSidebar.module.scss";
 import { shimmerEffect } from "./simmerEffect";
 function BasketSideBar({
   setShow,
