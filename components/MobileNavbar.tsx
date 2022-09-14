@@ -4,6 +4,7 @@ import {
   HomeIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 import styles from "../styles/components/mobileNavbar.module.scss";
 function MobileNavbar({
   setShowBasketSidebar,
@@ -16,14 +17,18 @@ function MobileNavbar({
     <div className={styles.navbar}>
       <div className="container">
         <div className={styles.icons}>
-          <button className={`${styles.item} ${styles.active}`}>
-            <HomeIcon className="w-6 h-6" />
-            خانه
-          </button>
-          <button className={`${styles.item}`}>
-            <UserIcon className="w-6 h-6" />
-            حساب
-          </button>
+          <Link href="/">
+            <button className={`${styles.item}`}>
+              <HomeIcon className="w-6 h-6" />
+              خانه
+            </button>
+          </Link>
+          <Link href="/auth">
+            <button className={`${styles.item}`}>
+              <UserIcon className="w-6 h-6" />
+              حساب
+            </button>
+          </Link>
           <button
             className={`${styles.item}`}
             onClick={() => setShowBasketSidebar(true)}
