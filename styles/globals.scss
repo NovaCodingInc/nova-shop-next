@@ -14,6 +14,7 @@
 
 #nprogress .bar {
   background-color: $primary !important;
+  height: 3px !important;
 }
 
 #nprogress .peg {
@@ -30,6 +31,13 @@
   }
 }
 
-.Toastify__toast-body{
+.Toastify__toast-body {
   font-family: iranyekan !important;
+}
+
+main {
+  min-height: 90vh !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
