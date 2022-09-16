@@ -70,6 +70,7 @@ function ProductSlider({ data }: { data: product_type[] }) {
                     alt="product"
                     placeholder="blur"
                     blurDataURL={shimmerEffect(120, 120)}
+                    priority={true}
                   />
                   <h3 className={styles.title}>{item.name}</h3>
                   <span className={styles.price}>

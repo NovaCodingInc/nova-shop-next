@@ -44,6 +44,7 @@ function Gallery({ galleries, main }: gallryies) {
           placeholder="blur"
           blurDataURL={shimmerEffect(300, 300)}
           alt="product pic"
+          key={mainSrc}
         />
       </div>
       <div className={styles.thumbs}>
@@ -58,8 +59,6 @@ function Gallery({ galleries, main }: gallryies) {
                 src={img.pictureUri}
                 width={70}
                 height={70}
-                placeholder="blur"
-                blurDataURL={shimmerEffect(300, 300)}
                 quality={50}
                 alt="product pic"
               />

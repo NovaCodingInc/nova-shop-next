@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/components/productList/productItem.module.scss";
-import { shimmerEffect } from "../simmerEffect";
 
 type propsType = {
   img: string;
@@ -14,14 +13,7 @@ function ProductItem({ img, title, id }: propsType) {
       <div className={styles.img}>
         <Link href={`/product/${id}`}>
           <a>
-            <Image
-              src={img}
-              width={200}
-              height={200}
-              alt="product"
-              placeholder="blur"
-              blurDataURL={shimmerEffect(200, 200)}
-            />
+            <Image src={img} width={200} height={200} alt="product" />
           </a>
         </Link>
       </div>
