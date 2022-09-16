@@ -11,13 +11,8 @@ import { authorize } from "./authorize";
 import Cookies from "js-cookie";
 import { useAppDispatch } from "../app/hooks";
 import { resetUserInfo, setUserInfo } from "../app/features/userSlice";
-import FullLoading from "./FullLoading";
-const BasketSideBar = dynamic(() => import("./BasketSidebar"), {
-  loading: () => <FullLoading />,
-});
-const FullPageMenu = dynamic(() => import("./FullPageMenu"), {
-  loading: () => <FullLoading />,
-});
+import BasketSideBar from "./BasketSidebar";
+import FullPageMenu from "./FullPageMenu";
 
 const getLinks = async () => {
   try {

@@ -4,10 +4,10 @@ import Link from "next/link";
 import styles from "../styles/components/fullpageMenu.module.scss";
 function FullPageMenu({
   setShow,
-  links
+  links,
 }: {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  links : any[]
+  links: any[];
 }) {
   return (
     <>
@@ -28,35 +28,38 @@ function FullPageMenu({
           </button>
         </div>
         <div className={styles.items}>
-          {links.map((link: any) => {
-            return !link.dropdown ? (
-              <Link href={link.link || "/"} key={link.title}>
-                <a className={styles.item} onClick={() => setShow(false)}>
-                  {" "}
-                  {link.title}{" "}
-                </a>
-              </Link>
-            ) : (
-              <div className={styles.dropdown} key={link.title}>
-                <span>{link.title} : </span>
-                <div className={styles.dropdownList}>
-                  {link.dropdownLinks.map((link: any) => {
-                    return (
-                      <Link href={link.link} key={link.title}>
-                        <a
-                          className={styles.item}
-                          onClick={() => setShow(false)}
-                        >
-                          {" "}
-                          {link.title}{" "}
-                        </a>
-                      </Link>
-                    );
-                  })}
+          {!links.length ? (
+            <p>در حال بارگذاری ...</p>
+          ) : (
+            links.map((link: any) => {
+              return !link.dropdown ? (
+                <Link href={link.link || "/"} key={link.title}>
+                  <a className={styles.item} onClick={() => setShow(false)}>
+                    {link.title}
+                  </a>
+                </Link>
+              ) : (
+                <div className={styles.dropdown} key={link.title}>
+                  <span>{link.title} : </span>
+                  <div className={styles.dropdownList}>
+                    {link.dropdownLinks.map((link: any) => {
+                      return (
+                        <Link href={link.link} key={link.title}>
+                          <a
+                            className={styles.item}
+                            onClick={() => setShow(false)}
+                          >
+                            {" "}
+                            {link.title}{" "}
+                          </a>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </motion.div>
       <motion.div

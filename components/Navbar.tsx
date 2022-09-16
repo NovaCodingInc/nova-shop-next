@@ -9,7 +9,7 @@ function Navbar({links}:{links : any[]}) {
     <nav className={styles.navbar}>
       <div className="container">
         <div style={{ display: "flex" }}>
-          {links.map((link: any) => {
+          {!links.length ? <p>در حال بارگذاری ...</p> : links.map((link: any) => {
             return link.dropdown ? (
               <div className={styles.dropdown} key={link.title}>
                 <button
