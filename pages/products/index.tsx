@@ -95,6 +95,7 @@ const Products: NextPage<propsType> = ({ productsProp, totalPages }) => {
                   img={product.pictureUri}
                   title={product.name}
                   id={product.id}
+                  price={product.price}
                 />
               );
             })

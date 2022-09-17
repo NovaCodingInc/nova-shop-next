@@ -6,8 +6,9 @@ type propsType = {
   img: string;
   title: string;
   id: number;
+  price : number
 };
-function ProductItem({ img, title, id }: propsType) {
+function ProductItem({ img, title, id , price }: propsType) {
   return (
     <div className={styles.item}>
       <div className={styles.img}>
@@ -21,7 +22,7 @@ function ProductItem({ img, title, id }: propsType) {
       <Link href={`/product/${id}`}>
         <a className={styles.title}>{title}</a>
       </Link>
-      <span className={styles.price}>2,000 تومان</span>
+      <span className={styles.price}>{price.toLocaleString()} تومان</span>
       <Link href={`/product/${id}`}>
         <a className={styles.btn}>مشاهده و خرید</a>
       </Link>

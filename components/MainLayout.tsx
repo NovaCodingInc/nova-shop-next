@@ -7,12 +7,14 @@ import Navbar from "./Navbar";
 import dynamic from "next/dynamic";
 import axios from "../context/customAxios";
 import { category_type } from "./apiProducts";
-import { authorize } from "./authorize";
+import { authorize, getCustomerBasket } from "./authorize";
 import Cookies from "js-cookie";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { resetUserInfo, setUserInfo } from "../app/features/userSlice";
 import BasketSideBar from "./BasketSidebar";
 import FullPageMenu from "./FullPageMenu";
+import { addAllToBasket, setTotalPrice } from "../app/features/basketSlice";
+import { useRouter } from "next/router";
 
 const getLinks = async () => {
   try {
@@ -63,22 +65,37 @@ export default function Layout({ children }: { children: any }) {
   const [showBasketSideBar, setShowBasketSidebar] = useState(false);
   const [showFullMenu, setShowFullMenu] = useState(false);
   const [links, setLinks] = useState<any>([]);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const basketCount = useAppSelector((state) => state.basket.items).length;
   useEffect(() => {
     let linksArr: any = [];
     (async () => {
       linksArr = await getLinks();
       setLinks(linksArr);
-      authorize().then((result) => {
-        if (result !== false) {
-          dispatch(setUserInfo(result.email));
-        } else {
-          Cookies.remove("token");
-          dispatch(resetUserInfo());
-        }
-      });
+      authorize()
+        .then((result) => {
+          if (result !== false) {
+            dispatch(setUserInfo({ email: result.email, token: result.token }));
+            return getCustomerBasket();
+          } else {
+            Cookies.remove("token");
+            dispatch(resetUserInfo());
+            throw new Error("error");
+          }
+        })
+        .then((basket) => {
+          if (basket !== false) {
+            dispatch(addAllToBasket(basket.items));
+            dispatch(setTotalPrice(basket.totalPrice));
+          }
+        })
+        .catch(() => null);
     })();
   }, []);
+  useEffect(() => {
+    setShowBasketSidebar(false);
+  }, [router.query]);
   useEffect(() => {
     if (showBasketSideBar || showFullMenu)
       document.body.style.overflowY = "hidden";
@@ -86,11 +103,15 @@ export default function Layout({ children }: { children: any }) {
   }, [showBasketSideBar, showFullMenu]);
   return (
     <>
-      <Header setShowBasketSidebar={setShowBasketSidebar} />
+      <Header
+        setShowBasketSidebar={setShowBasketSidebar}
+        basketCount={basketCount}
+      />
       <Navbar links={links} />
       <MobileNavbar
         setShowBasketSidebar={setShowBasketSidebar}
         setShowFullMenu={setShowFullMenu}
+        basketCount={basketCount}
       />
       <AnimatePresence>
         {showBasketSideBar && <BasketSideBar setShow={setShowBasketSidebar} />}

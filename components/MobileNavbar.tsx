@@ -9,9 +9,11 @@ import styles from "../styles/components/mobileNavbar.module.scss";
 function MobileNavbar({
   setShowBasketSidebar,
   setShowFullMenu,
+  basketCount
 }: {
   setShowBasketSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   setShowFullMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  basketCount : number
 }) {
   return (
     <div className={styles.navbar}>
@@ -34,7 +36,7 @@ function MobileNavbar({
             onClick={() => setShowBasketSidebar(true)}
           >
             <ShoppingBagIcon className="w-6 h-6" />
-            <span>3</span>
+            <span>{basketCount}</span>
             سبد
           </button>
           <button

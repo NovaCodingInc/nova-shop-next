@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setUserInfo } from "../../app/features/userSlice";
 import FullLoading from "../../components/FullLoading";
+import { getCustomerBasket, updatedPrice } from "../../components/authorize";
+import { addAllToBasket, setTotalPrice } from "../../app/features/basketSlice";
 
 type values_type = {
   email: string;
@@ -116,8 +118,21 @@ function Auth() {
           }
         );
         if (response?.data.succeeded) {
-          dispatch(setUserInfo(response.data.email));
+          dispatch(
+            setUserInfo({
+              email: response.data.email,
+              token: response.data.token,
+            })
+          );
           Cookies.set("token", response.data.token, { expires: 30 });
+          const basket = await getCustomerBasket();
+          if (basket !== false) {
+            dispatch(addAllToBasket(basket.items));
+          }
+          const totalPrice = await updatedPrice();
+          if (totalPrice !== false) {
+            dispatch(setTotalPrice(totalPrice));
+          }
           router.push("/user");
         }
       })();

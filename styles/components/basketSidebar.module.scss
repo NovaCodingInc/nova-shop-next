@@ -87,6 +87,10 @@
         .price{
           color: $primary;
           @extend .text-small;
+          small{
+            color: $gray-600;
+            @extend .text-x-small;
+          }
         }
       }
       .delete {

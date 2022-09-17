@@ -52,7 +52,15 @@ const Product: NextPage<propsType> = ({ product, productsSameCat }) => {
             </span>
           </div>
           <div className={styles.order}>
-            <Order payload={{count : 1,id:product.id , title : product.name , price : product.price, image : product.pictureUri}} />
+            <Order
+              payload={{
+                catalogItemId: product.id,
+                catalogItemName: product.name,
+                price: product.price,
+                totalPrice: product.price,
+                pictureUri: product.pictureUri,
+              }}
+            />
           </div>
         </div>
       </div>
@@ -80,9 +88,7 @@ export default Product;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const { data: product } = await axios.get(
-      `catalog/${params?.id}`
-    );
+    const { data: product } = await axios.get(`catalog/${params?.id}`);
     const { data: productsSameCat } = await axios.get(
       `catalog/?take=10&category=${product.category}`
     );
@@ -99,7 +105,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         product,
         productsSameCat: productsSameCat.products,
       },
-      revalidate : 60
+      revalidate: 60,
     };
   } catch {
     return {

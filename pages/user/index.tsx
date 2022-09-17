@@ -1,13 +1,18 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { resetBasket } from "../../app/features/basketSlice";
 import { resetUserInfo } from "../../app/features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import FullLoading from "../../components/FullLoading";
 
 function Dashboard() {
   const router = useRouter();
-  const { isLoggedIn, email, loading :loadingUserInfo } = useAppSelector((state) => state.user);
+  const {
+    isLoggedIn,
+    email,
+    loading: loadingUserInfo,
+  } = useAppSelector((state) => state.user);
   useEffect(() => {
     !isLoggedIn && router.push("/auth");
   }, [isLoggedIn]);
@@ -15,6 +20,7 @@ function Dashboard() {
   const logOut = () => {
     Cookies.remove("token");
     dispatch(resetUserInfo());
+    dispatch(resetBasket());
     router.push("/auth");
   };
   if (loadingUserInfo) {
@@ -23,7 +29,7 @@ function Dashboard() {
     return (
       <div className="container py-2">
         سلام {email}
-        <button onClick={logOut}>لاگ اوت</button>
+        <button style={{backgroundColor : 'red'}} onClick={logOut}>لاگ اوت</button>
       </div>
     );
   }

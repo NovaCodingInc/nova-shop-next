@@ -10,8 +10,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 function Header({
   setShowBasketSidebar,
+  basketCount
 }: {
   setShowBasketSidebar: React.Dispatch<SetStateAction<boolean>>;
+  basketCount : number
 }) {
   const serachInput = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -26,7 +28,7 @@ function Header({
         <div className="container">
           <div className={styles.icons}>
             <button onClick={() => setShowBasketSidebar(true)}>
-              <span>3</span>
+              <span>{basketCount}</span>
               <ShoppingBagIcon className="w-5 h-5" />
             </button>
             <Link href="/auth">
