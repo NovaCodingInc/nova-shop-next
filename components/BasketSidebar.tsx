@@ -119,7 +119,8 @@ function BasketSideBar({
       >
         <div className={styles.header}>
           <strong>
-            <ShoppingBagIcon className="w-6 h-6" />3 آیتم
+            <ShoppingBagIcon className="w-6 h-6" />
+            {basketItems.length} آیتم
           </strong>
           <button onClick={() => setShow(false)}>
             <XIcon className="w-7 h-7" />
