@@ -1,18 +1,15 @@
 import Cookies from "js-cookie";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { resetBasket } from "../../app/features/basketSlice";
 import { resetUserInfo } from "../../app/features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import FullLoading from "../../components/FullLoading";
+import styles from "../../styles/components/user/user.module.scss";
 
 function Dashboard() {
   const router = useRouter();
-  const {
-    isLoggedIn,
-    email,
-    loading: loadingUserInfo,
-  } = useAppSelector((state) => state.user);
+  const { isLoggedIn, email } = useAppSelector((state) => state.user);
   useEffect(() => {
     !isLoggedIn && router.push("/auth");
   }, [isLoggedIn]);
@@ -26,10 +23,24 @@ function Dashboard() {
 
   return (
     <div className="container py-2">
-      سلام {email}
-      <button style={{ backgroundColor: "red" }} onClick={logOut}>
-        لاگ اوت
-      </button>
+      <div className={styles.wrapper}>
+        <div className={styles.greeting}>
+          <p>
+            سلام <span>{email}</span> خوش آمدید
+          </p>
+          <div className={styles.icon}>
+            <Image
+              src={"/images/userIcon.png"}
+              width={130}
+              height={130}
+              alt="user icon"
+            />
+          </div>
+        </div>
+        <div className={styles.logout}>
+          <button onClick={logOut}>خروج از حساب</button>
+        </div>
+      </div>
     </div>
   );
 }
