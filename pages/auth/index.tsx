@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "../../styles/components/auth/Auth.module.scss";
 import Card from "../../components/UI/Card";
@@ -72,9 +72,7 @@ function Auth() {
     },
   ];
   const dispatch = useAppDispatch();
-  const { isLoggedIn, loading: loadingUserInfo } = useAppSelector(
-    (state) => state.user
-  );
+  const { isLoggedIn } = useAppSelector((state) => state.user);
   useEffect(() => {
     isLoggedIn && router.push("/user");
   }, [isLoggedIn]);
@@ -152,50 +150,47 @@ function Auth() {
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     setValues({ ...values, [event.target.name]: event.target.value });
   }
-  if (loadingUserInfo) {
-    return <FullLoading />;
-  } else {
-    return (
-      <div className="container py-2">
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={true}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <Card className={styles.formCard}>
-          <form onSubmit={handleSubmit} className={styles.content}>
-            <h3>ورود</h3>
-            {inputs.map((input) => (
-              <FormControl
-                key={input.id}
-                {...input}
-                value={values[input.name as ObjectKey]}
-                onChange={onChange}
-                onKeyUp={handleError}
-                hasError={errors[input.name as ObjectKey]}
-              />
-            ))}
-            <Button type="submit" className={styles.formBtn} disabled={loading}>
-              ورود
-            </Button>
-            <div className={styles.signup}>
-              <span>حساب ندارید؟</span>
-              <Link href="/auth/signup">
-                <a>
-                  <h6>ثبت نام</h6>
-                </a>
-              </Link>
-            </div>
-          </form>
-        </Card>
-      </div>
-    );
-  }
+
+  return (
+    <div className="container py-2">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Card className={styles.formCard}>
+        <form onSubmit={handleSubmit} className={styles.content}>
+          <h3>ورود</h3>
+          {inputs.map((input) => (
+            <FormControl
+              key={input.id}
+              {...input}
+              value={values[input.name as ObjectKey]}
+              onChange={onChange}
+              onKeyUp={handleError}
+              hasError={errors[input.name as ObjectKey]}
+            />
+          ))}
+          <Button type="submit" className={styles.formBtn} disabled={loading}>
+            ورود
+          </Button>
+          <div className={styles.signup}>
+            <span>حساب ندارید؟</span>
+            <Link href="/auth/signup">
+              <a>
+                <h6>ثبت نام</h6>
+              </a>
+            </Link>
+          </div>
+        </form>
+      </Card>
+    </div>
+  );
 }
 export default Auth;

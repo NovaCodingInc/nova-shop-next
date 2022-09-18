@@ -18,6 +18,7 @@ type addtoBasketType = {
 type propType = { payload: addtoBasketType };
 function Order({ payload }: propType) {
   const [count, setCount] = useState(1);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const basket = useAppSelector((state) => state.basket.items);
@@ -35,27 +36,35 @@ function Order({ payload }: propType) {
     if (!user.isLoggedIn) {
       toast.info("ابتدا وارد حساب کاربری خود شوید");
     } else {
-      const response = await axios.post(
-        "/basket",
-        {
-          catalogItemId: payload.catalogItemId,
-          count,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          "/basket",
+          {
+            catalogItemId: payload.catalogItemId,
+            count,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          dispatch(addToBasket({ ...payload, count }));
+          const totalPrice = await updatedPrice();
+          if (totalPrice !== false) {
+            dispatch(setTotalPrice(totalPrice));
+          }
+          toast.success("محصول به سبد خرید اضافه شد");
+          setLoading(false);
+        } else {
+          toast.error("خطایی پیش آمد");
+          setLoading(false);
         }
-      );
-      if (response.status === 200) {
-        dispatch(addToBasket({ ...payload, count }));
-        const totalPrice = await updatedPrice();
-        if (totalPrice !== false) {
-          dispatch(setTotalPrice(totalPrice));
-        }
-        toast.success("محصول به سبد خرید اضافه شد");
-      } else {
+      } catch {
         toast.error("خطایی پیش آمد");
+        setLoading(false);
       }
     }
   };
@@ -88,7 +97,9 @@ function Order({ payload }: propType) {
         </button>
       </div>
       <div className={styles.btn}>
-        <button onClick={addToBasketHandler}>افزودن به سبد خرید</button>
+        <button onClick={addToBasketHandler} disabled={loading}>
+          {loading ? "بارگذاری ..." : "افزودن به سبد خرید"}
+        </button>
       </div>
     </>
   );

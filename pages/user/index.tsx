@@ -23,16 +23,15 @@ function Dashboard() {
     dispatch(resetBasket());
     router.push("/auth");
   };
-  if (loadingUserInfo) {
-    return <FullLoading />;
-  } else {
-    return (
-      <div className="container py-2">
-        سلام {email}
-        <button style={{backgroundColor : 'red'}} onClick={logOut}>لاگ اوت</button>
-      </div>
-    );
-  }
+
+  return (
+    <div className="container py-2">
+      سلام {email}
+      <button style={{ backgroundColor: "red" }} onClick={logOut}>
+        لاگ اوت
+      </button>
+    </div>
+  );
 }
 
 export default Dashboard;

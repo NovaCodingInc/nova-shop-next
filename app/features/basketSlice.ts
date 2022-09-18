@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { isSymbolObject } from "util/types";
 type basketItemType = {
   catalogItemId: number;
   catalogItemName: string;
   pictureUri: string;
   count: number;
   price: number;
-  totalPrice : number
+  totalPrice: number;
 };
 
 interface basketStateType {
@@ -24,13 +23,13 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
     setTotalPrice: (state, action: PayloadAction<number>) => {
-        state.totalPrice = action.payload;
-      },
+      state.totalPrice = action.payload;
+    },
 
     addToBasket: (state, action: PayloadAction<basketItemType>) => {
-      const exists = state.items.filter(
+      const exists = state.items.find(
         (item) => item.catalogItemId === action.payload.catalogItemId
-      )[0]
+      )
         ? true
         : false;
       if (!exists) {
@@ -39,8 +38,10 @@ const basketSlice = createSlice({
         });
       } else {
         const newArr = state.items.map((item) => {
-          if (item.catalogItemId === action.payload.catalogItemId)
-            return { ...item, count: action.payload.count };
+          if (item.catalogItemId === action.payload.catalogItemId) {
+            const newCount = item.count + action.payload.count;
+            return { ...item, count: newCount };
+          }
           return item;
         });
         state.items = newArr;
@@ -80,6 +81,6 @@ export const {
   resetBasket,
   increaseBasketCount,
   decreaseBasketCount,
-  setTotalPrice
+  setTotalPrice,
 } = basketSlice.actions;
 export default basketSlice.reducer;

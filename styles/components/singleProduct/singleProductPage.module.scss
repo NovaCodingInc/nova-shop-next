@@ -60,6 +60,7 @@
     }
     .order {
       display: flex;
+      flex-wrap: wrap;
       flex-direction: row;
       align-items: center;
       margin-top: 2rem;
@@ -97,10 +98,15 @@
           font-weight: bold;
           margin-right: 2rem;
           border: 1px solid $primary;
+          width: 18rem;
           @include transition;
-          &:hover{
+          &:not(:disabled):hover{
             background-color: $white;
             color: $primary;
+          }
+          &:disabled{
+            opacity: 0.5;
+            cursor: not-allowed;
           }
         }
       }

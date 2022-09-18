@@ -15,6 +15,8 @@ import BasketSideBar from "./BasketSidebar";
 import FullPageMenu from "./FullPageMenu";
 import { addAllToBasket, setTotalPrice } from "../app/features/basketSlice";
 import { useRouter } from "next/router";
+import { endLoading, startLoading } from "../app/features/mainLoading";
+import FullLoading from "./FullLoading";
 
 const getLinks = async () => {
   try {
@@ -68,8 +70,12 @@ export default function Layout({ children }: { children: any }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const basketCount = useAppSelector((state) => state.basket.items).length;
+  const isMainLoading = useAppSelector(
+    (state) => state.isMainLoading.isLoading
+  );
   useEffect(() => {
     let linksArr: any = [];
+    dispatch(startLoading());
     (async () => {
       linksArr = await getLinks();
       setLinks(linksArr);
@@ -89,8 +95,9 @@ export default function Layout({ children }: { children: any }) {
             dispatch(addAllToBasket(basket.items));
             dispatch(setTotalPrice(basket.totalPrice));
           }
+          dispatch(endLoading());
         })
-        .catch(() => null);
+        .catch(() => dispatch(endLoading()));
     })();
   }, []);
   useEffect(() => {
@@ -103,24 +110,32 @@ export default function Layout({ children }: { children: any }) {
   }, [showBasketSideBar, showFullMenu]);
   return (
     <>
-      <Header
-        setShowBasketSidebar={setShowBasketSidebar}
-        basketCount={basketCount}
-      />
-      <Navbar links={links} />
-      <MobileNavbar
-        setShowBasketSidebar={setShowBasketSidebar}
-        setShowFullMenu={setShowFullMenu}
-        basketCount={basketCount}
-      />
-      <AnimatePresence>
-        {showBasketSideBar && <BasketSideBar setShow={setShowBasketSidebar} />}
-        {showFullMenu && (
-          <FullPageMenu setShow={setShowFullMenu} links={links} />
-        )}
-      </AnimatePresence>
-      <main>{children}</main>
-      <Footer />
+      {isMainLoading ? (
+        <FullLoading />
+      ) : (
+        <>
+          <Header
+            setShowBasketSidebar={setShowBasketSidebar}
+            basketCount={basketCount}
+          />
+          <Navbar links={links} />
+          <MobileNavbar
+            setShowBasketSidebar={setShowBasketSidebar}
+            setShowFullMenu={setShowFullMenu}
+            basketCount={basketCount}
+          />
+          <AnimatePresence>
+            {showBasketSideBar && (
+              <BasketSideBar setShow={setShowBasketSidebar} />
+            )}
+            {showFullMenu && (
+              <FullPageMenu setShow={setShowFullMenu} links={links} />
+            )}
+          </AnimatePresence>
+          <main>{children}</main>
+          <Footer />
+        </>
+      )}
     </>
   );
 }
