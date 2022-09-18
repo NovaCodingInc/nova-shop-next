@@ -21,16 +21,11 @@ function Order({ payload }: propType) {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const basket = useAppSelector((state) => state.basket.items);
   const { query } = useRouter();
 
   useEffect(() => {
-    const basketItem = basket.filter(
-      (item) => item.catalogItemId === payload.catalogItemId
-    )[0];
-    if (basketItem) setCount(basketItem.count);
-    else setCount(1);
-  }, [query.id, basket]);
+    setCount(1);
+  }, [query.id]);
 
   const addToBasketHandler = async () => {
     if (!user.isLoggedIn) {
